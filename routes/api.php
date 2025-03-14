@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ChatController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,4 +31,4 @@ Route::put('/sales/{id}',[SaleController::class, 'update']);
 Route::delete('/sales/{id}',[SaleController::class, 'destroy']);
 
 
-
+Route::post('/ask', [ChatController::class, 'askQuestion']);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Client;
 use Illuminate\Http\Request;
 
@@ -19,9 +20,9 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        $car = Client::find($id);
-        if ($car) {
-            return response()->json($car, 200);
+        $client = Client::find($id);
+        if ($client) {
+            return response()->json($client, 200);
         }
         return response()->json(['message' => 'Client not found'], 404);
     }
@@ -85,7 +86,7 @@ class ClientController extends Controller
 
         $client->delete();
 
-        return response()->jso([
+        return response()->json([
             'error' => false,
             'message' => 'Client deleted successfully'
         ], 200);
