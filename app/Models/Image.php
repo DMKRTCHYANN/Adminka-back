@@ -4,19 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Client extends Model
+class Image extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'phone',
-        'email',
+        'building_id',
+        'image'
     ];
 
-    public function purchases()
+
+    public function building()
     {
-        return $this->hasMany(Sale::class);
+        return $this->belongsTo(Building::class);
     }
 }
