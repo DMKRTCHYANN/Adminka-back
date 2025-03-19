@@ -18,4 +18,4 @@ Route::delete('/buildings/{id}',[BuildingController::class, 'destroy']);
 
 
 Route::get('/images', [ImageController::class, 'index']);
-Route::post('/images', [ImageController::class, 'store']);
+Route::post('/images/{id}', [ImageController::class, 'store']);
