@@ -32,12 +32,15 @@ class BuildingController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
-            'long_description' => 'required|string',
+            'long_description' => 'required',
             'bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->only(['title', 'short_description', 'long_description']);
-        $data['bg_image'] = $this->handleImageUpload($request);
+
+        if($request->file('bg_image')){
+            $data['bg_image'] = $this->handleImageUpload($request);
+        }
 
         $building = Building::create($data);
 
