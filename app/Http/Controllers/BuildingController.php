@@ -17,7 +17,6 @@ class BuildingController extends Controller
         ]);
     }
 
-
     public function show($id)
     {
         $building = Building::find($id);
@@ -26,6 +25,7 @@ class BuildingController extends Controller
         }
         return response()->json(['message' => 'Building not found'], 404);
     }
+
 
     public function store(Request $request)
     {
@@ -38,7 +38,7 @@ class BuildingController extends Controller
 
         $data = $request->only(['title', 'short_description', 'long_description']);
 
-        if($request->file('bg_image')){
+        if ($request->file('bg_image')) {
             $data['bg_image'] = $this->handleImageUpload($request);
         }
 
@@ -83,7 +83,6 @@ class BuildingController extends Controller
             'data' => $building,
         ]);
     }
-
 
 
     public function destroy($id)

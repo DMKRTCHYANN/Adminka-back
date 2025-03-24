@@ -16,6 +16,7 @@ Route::post('/buildings', [BuildingController::class, 'store']);
 Route::put('/buildings/{id}', [BuildingController::class, 'update']);
 Route::delete('/buildings/{id}',[BuildingController::class, 'destroy']);
 
-
 Route::get('/images', [ImageController::class, 'index']);
 Route::post('/images/{id}', [ImageController::class, 'store']);
+Route::get('/buildings/{id}/images', [ImageController::class, 'getBuildingImages']);
+Route::delete('/images/{id}',[ImageController::class, 'destroy']);
