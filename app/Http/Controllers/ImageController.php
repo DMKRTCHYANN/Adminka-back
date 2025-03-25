@@ -22,29 +22,33 @@ class ImageController extends Controller
         return response()->json([
             'id' => $id,
             'images' => $images->map(function ($image) {
-                return Storage::url($image->image);
+                return [
+                    'id' => $image->id,
+                    'url' => Storage::url($image->image),
+                ];
             }),
         ]);
     }
 
-    public function destroy(Request $request)
+    public function destroy(Request $request, $id)
     {
-        $imagePath = $request->input('image_path');
+        $image = Image::find($id);
 
-        if (!Storage::exists($imagePath)) {
+        if (!$image) {
             return response()->json([
                 'error' => true,
                 'message' => 'Image not found'
             ], 404);
         }
 
-        Storage::delete($imagePath);
+        $image->delete();
 
         return response()->json([
             'error' => false,
             'message' => 'Image deleted successfully'
         ], 200);
     }
+
 
 
 
