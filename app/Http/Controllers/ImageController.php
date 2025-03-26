@@ -57,7 +57,7 @@ class ImageController extends Controller
         $validated = $request->validate([
             'building_id' => 'required|exists:buildings,id',
             'images' => 'required|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'images.*' => 'image|mimes:jpeg,png,jpg,gif,|max:2048',
         ]);
 
         $imagePaths = [];
