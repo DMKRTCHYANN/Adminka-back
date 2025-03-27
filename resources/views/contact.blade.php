@@ -38,8 +38,8 @@
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Главная страница</a></li>
-                <li class="nav-item"><a class="nav-link active" href="../contact">Обратная Связь</a></li>
-            </ul>
+                <li class="nav-item"><a class="nav-link active" href="{{ route('contact') }}">Обратная Связь</a></li>
+                </ul>
         </div>
     </div>
 </nav>

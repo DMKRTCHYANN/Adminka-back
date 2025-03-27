@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../css/style.css?14"/>
 </head>
 <body>
+
 <!-- Preloader -->
 <div class="preloader-bg"></div>
 <div id="preloader">
@@ -61,7 +62,7 @@
     </a>
 </header>
 <!-- Content -->
-<section class="restaurant-page section-padding" data-scroll-index="1">
+<section class="restaurant-page  section-padding" data-scroll-index="1">
     <div class="container">
         <div class="row mb-30">
             <div class="col-md-12">
@@ -71,6 +72,7 @@
         </div>
     </div>
 </section>
+
 <!-- Restaurant Menu -->
 <!--    <section class="section-padding menu faq-1">-->
 <!--        <div class="container">-->

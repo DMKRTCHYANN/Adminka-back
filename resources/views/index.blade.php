@@ -44,7 +44,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">Главная страница</a>
                 </li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="../contact">Обратная Связь</a>
+                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a>
                 </li>
             </ul>
         </div>
@@ -528,7 +528,7 @@
                         <figure><img src="{{ url('storage/'.$building->bg_image) }}"
                                      style="height: 400px;object-fit: cover" alt="" class="img-fluid"></figure>
                         <div class="caption padding-left">
-                            <h4><a href="./artlife-kempinski-residences">{{ strip_tags($building->title) }}</a></h4>
+                            <h4><a href="/buildings/{{ $building->id}}">{{ strip_tags($building->title) }}</a></h4>
                             <p>{{ strip_tags($building->short_description) }}</p>
                             <div class="info-wrapper mt-20">
                                 <div class="butn-dark"><a

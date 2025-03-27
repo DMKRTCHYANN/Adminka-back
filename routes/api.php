@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuildingController;
@@ -20,3 +21,5 @@ Route::get('/images', [ImageController::class, 'index']);
 Route::post('/images/{id}', [ImageController::class, 'store']);
 Route::get('/buildings/{id}/images', [ImageController::class, 'getBuildingImages']);
 Route::delete('/images/{id}',[ImageController::class, 'destroy']);
+
+Route::post('/login', [AuthController::class, 'login']);
