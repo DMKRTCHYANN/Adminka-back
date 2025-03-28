@@ -10,12 +10,17 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-
 Route::get('/buildings', [BuildingController::class, 'index']);
 Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('/buildings', [BuildingController::class, 'store']);
 Route::put('/buildings/{id}', [BuildingController::class, 'update']);
 Route::delete('/buildings/{id}',[BuildingController::class, 'destroy']);
+Route::post('buildings/{id}/move-after/{positionEntityId}', [BuildingController::class, 'moveAfter']);
+Route::post('buildings/{id}/move-down', [BuildingController::class, 'moveDown']);
+
+Route::post('buildings/reorder', [BuildingController::class, 'reorder']);
+
+
 
 Route::get('/images', [ImageController::class, 'index']);
 Route::post('/images/{id}', [ImageController::class, 'store']);
