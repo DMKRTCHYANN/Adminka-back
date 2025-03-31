@@ -146,25 +146,37 @@ use Illuminate\Http\Request;
 class BuildingController extends Controller
 {
 
+
     public function index(Request $request)
     {
         $perPage = $request->input('limit', 5);
-        $buildings = Building::with('images')
-            ->sorted()
-            ->paginate($perPage);
+        $buildings = Building::with('images');
 
+        if ($request->get('order') == 'id') {
+            $buildings->orderBy('id', $request->get('direction', 'asc'));
+        } else {
+            $buildings = $buildings->sorted();
+        }
+
+        $buildings = $buildings->paginate($perPage);
         return response()->json([
             'error' => false,
-            'data' => $buildings,
+            'data' => $buildings->toArray()['data'],
+            'totalPages' => $buildings->lastPage(),
+            'per_page' => $buildings->perPage(),
+            'to' => $buildings->currentPage() * $buildings->perPage(),
+            'total' => $buildings->total(),
         ]);
     }
 
     public function show($id)
     {
         $building = Building::find($id);
+
         if ($building) {
             return response()->json($building, 200);
         }
+
         return response()->json(['message' => 'Building not found'], 404);
     }
 
