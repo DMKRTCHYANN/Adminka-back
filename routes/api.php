@@ -16,9 +16,8 @@ Route::get('/buildings/{id}', [BuildingController::class, 'show']);
 Route::post('/buildings', [BuildingController::class, 'store']);
 Route::put('/buildings/{id}', [BuildingController::class, 'update']);
 Route::delete('/buildings/{id}',[BuildingController::class, 'destroy']);
-Route::post('buildings/{id}/move-after/{positionEntityId}', [BuildingController::class, 'moveAfter']);
-Route::post('buildings/{id}/move-down', [BuildingController::class, 'moveDown']);
-Route::post('buildings/reorder', [BuildingController::class, 'reorder']);
+Route::put('/buildings/{id}/moveAfter/{positionEntityId}', [BuildingController::class, 'moveAfter']);
+Route::put('/buildings/{id}/moveBefore/{positionEntityId}', [BuildingController::class, 'moveBefore']);
 
 Route::get('/images', [ImageController::class, 'index']);
 Route::post('/images/{id}', [ImageController::class, 'store']);

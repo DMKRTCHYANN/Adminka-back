@@ -159,9 +159,10 @@ class BuildingController extends Controller
         }
 
         $buildings = $buildings->paginate($perPage);
+
         return response()->json([
             'error' => false,
-            'data' => $buildings->toArray()['data'],
+            'data' => $buildings->items(),
             'totalPages' => $buildings->lastPage(),
             'per_page' => $buildings->perPage(),
             'to' => $buildings->currentPage() * $buildings->perPage(),
@@ -295,48 +296,21 @@ class BuildingController extends Controller
 
         $building->moveAfter($positionEntity);
 
-        $buildings = Building::sorted()->get();
-
         return response()->json([
             'error' => false,
-            'data' => $buildings,
-            'message' => 'Building moved after successfully'
         ]);
     }
 
 
-    public function moveDown($id)
+    public function moveBefore($id, $positionEntityId)
     {
         $building = Building::findOrFail($id);
+        $positionEntity = Building::findOrFail($positionEntityId);
 
-        if ($building->moveDown()) {
-            $buildings = Building::sorted()->get();
-
-            return response()->json([
-                'error' => false,
-                'data' => $buildings,
-                'message' => 'Building moved down successfully'
-            ]);
-        }
-
-        return response()->json([
-            'error' => true,
-            'message' => 'Building is already at the bottom'
-        ], 400);
-    }
-
-    public function reorder(Request $request)
-    {
-        $request->validate([
-            'order' => 'required|array',
-            'order.*' => 'exists:buildings,id',
-        ]);
-
-        Building::setNewOrder($request->order);
+        $building->moveBefore($positionEntity);
 
         return response()->json([
             'error' => false,
-            'message' => 'Buildings reordered successfully',
         ]);
     }
 }
