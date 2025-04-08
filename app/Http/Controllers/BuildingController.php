@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Building;
 use Illuminate\Http\Request;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 
 class BuildingController extends Controller
 {
@@ -42,6 +43,7 @@ class BuildingController extends Controller
         return response()->json(['message' => 'Building not found'], 404);
     }
 
+
     public function store(Request $request)
     {
         $request->validate([
@@ -49,6 +51,7 @@ class BuildingController extends Controller
             'short_description' => 'required|string',
             'long_description' => 'required',
             'bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'location' => 'required|json',
         ]);
 
         $data = $request->only(['title', 'short_description', 'long_description']);
@@ -57,6 +60,11 @@ class BuildingController extends Controller
             $data['bg_image'] = $this->handleImageUpload($request);
         }
 
+        $locationData = json_decode($request->location, true);
+        $location = new Point($locationData['coordinates'][1], $locationData['coordinates'][0]);
+
+        $data['location'] = $location;
+
         $building = Building::create($data);
 
         return response()->json([
@@ -64,6 +72,7 @@ class BuildingController extends Controller
             'data' => $building,
         ], 201);
     }
+
 
     public function update(Request $request, $id)
     {

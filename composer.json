@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
         "mailgun/mailgun-php": "^4.3",
+        "matanyadaev/laravel-eloquent-spatial": "^4.5",
         "propaganistas/laravel-phone": "^5.3",
         "rutorika/sortable": "^4.7",
         "symfony/http-client": "^7.2",

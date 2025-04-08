@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use MatanYadaev\EloquentSpatial\Objects\Point;
 use Rutorika\Sortable\SortableTrait;
 
 class Building extends Model
@@ -18,6 +19,11 @@ class Building extends Model
         'long_description',
         'bg_image',
         'position',
+        'location'
+    ];
+
+    protected $casts = [
+        'location' => Point::class,
     ];
 
 
