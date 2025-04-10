@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use MatanYadaev\EloquentSpatial\Objects\Point;
+use MatanYadaev\EloquentSpatial\Traits\HasSpatial;
 use Rutorika\Sortable\SortableTrait;
 
 class Building extends Model
 {
     use HasFactory;
     use SortableTrait;
+    use HasSpatial;
 
     protected $fillable = [
         'title',

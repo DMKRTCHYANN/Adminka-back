@@ -8,27 +8,27 @@ use MatanYadaev\EloquentSpatial\Objects\Point;
 
 class BuildingController extends Controller
 {
-
     public function index(Request $request)
     {
         $perPage = $request->input('limit', 5);
+
         $buildings = Building::with('images');
 
-        if ($request->get('order') == 'id') {
+        if ($request->input('order') === 'id') {
             $buildings->orderByDesc('id');
         } else {
-            $buildings = $buildings->sorted();
+            $buildings->sorted();
         }
 
-        $buildings = $buildings->paginate($perPage);
+        $paginatedBuildings = $buildings->paginate($perPage);
 
         return response()->json([
             'error' => false,
-            'data' => $buildings->items(),
-            'totalPages' => $buildings->lastPage(),
-            'per_page' => $buildings->perPage(),
-            'to' => $buildings->currentPage() * $buildings->perPage(),
-            'total' => $buildings->total(),
+            'data' => $paginatedBuildings->items(),
+            'totalPages' => $paginatedBuildings->lastPage(),
+            'per_page' => $paginatedBuildings->perPage(),
+            'to' => $paginatedBuildings->currentPage() * $paginatedBuildings->perPage(),
+            'total' => $paginatedBuildings->total(),
         ]);
     }
 
@@ -36,34 +36,31 @@ class BuildingController extends Controller
     {
         $building = Building::find($id);
 
-        if ($building) {
-            return response()->json($building, 200);
+        if (!$building) {
+            return response()->json(['message' => 'Building not found'], 404);
         }
 
-        return response()->json(['message' => 'Building not found'], 404);
+        return response()->json($building, 200);
     }
-
 
     public function store(Request $request)
     {
         $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'required|string',
-            'long_description' => 'required',
+            'long_description' => 'required|string',
             'bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location' => 'required|json',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
 
         $data = $request->only(['title', 'short_description', 'long_description']);
 
-        if ($request->file('bg_image')) {
+        if ($request->hasFile('bg_image')) {
             $data['bg_image'] = $this->handleImageUpload($request);
         }
 
-        $locationData = json_decode($request->location, true);
-        $location = new Point($locationData['coordinates'][1], $locationData['coordinates'][0]);
-
-        $data['location'] = $location;
+        $data['location'] = new Point($request->input('latitude'), $request->input('longitude'));
 
         $building = Building::create($data);
 
@@ -73,16 +70,12 @@ class BuildingController extends Controller
         ], 201);
     }
 
-
     public function update(Request $request, $id)
     {
         $building = Building::find($id);
 
         if (!$building) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Building not found',
-            ], 404);
+            return response()->json(['error' => true, 'message' => 'Building not found'], 404);
         }
 
         $request->validate([
@@ -90,22 +83,21 @@ class BuildingController extends Controller
             'short_description' => 'required|string',
             'long_description' => 'required|string',
             'bg_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ]);
 
         $data = $request->only(['title', 'short_description', 'long_description']);
 
         if ($request->hasFile('bg_image')) {
             $data['bg_image'] = $this->handleImageUpload($request, $building->bg_image);
-        } else {
-            $data['bg_image'] = $building->bg_image;
         }
+
+        $data['location'] = new Point($request->input('latitude'), $request->input('longitude'));
 
         $building->update($data);
 
-        return response()->json([
-            'error' => false,
-            'data' => $building,
-        ]);
+        return response()->json(['error' => false, 'data' => $building]);
     }
 
     public function destroy($id)
@@ -113,10 +105,7 @@ class BuildingController extends Controller
         $building = Building::find($id);
 
         if (!$building) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Building not found',
-            ], 404);
+            return response()->json(['error' => true, 'message' => 'Building not found'], 404);
         }
 
         if ($building->bg_image) {
@@ -125,10 +114,7 @@ class BuildingController extends Controller
 
         $building->delete();
 
-        return response()->json([
-            'error' => false,
-            'message' => 'Building deleted successfully',
-        ], 200);
+        return response()->json(['error' => false, 'message' => 'Building deleted successfully']);
     }
 
     private function handleImageUpload(Request $request, $existingImage = null)
@@ -139,24 +125,8 @@ class BuildingController extends Controller
             }
             return $request->file('bg_image')->store('images', 'public');
         }
+
         return $existingImage;
-    }
-
-    public function a($id)
-    {
-        $building = Building::with('images')->find($id);
-
-        if (!$building) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Building not found',
-            ], 404);
-        }
-
-        return response()->json([
-            'error' => false,
-            'building' => $building,
-        ]);
     }
 
     public function moveAfter($id, $positionEntityId)
@@ -166,10 +136,7 @@ class BuildingController extends Controller
 
         $building->moveAfter($positionEntity);
 
-        return response()->json([
-            'error' => false,
-            'building' => $building
-        ]);
+        return response()->json(['error' => false, 'building' => $building]);
     }
 
     public function moveBefore($id, $positionEntityId)
@@ -179,8 +146,6 @@ class BuildingController extends Controller
 
         $building->moveBefore($positionEntity);
 
-        return response()->json([
-            'error' => false,
-        ]);
+        return response()->json(['error' => false]);
     }
 }
