@@ -149,3 +149,4 @@ class BuildingController extends Controller
         return response()->json(['error' => false]);
     }
 }
+

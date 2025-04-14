@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\Api\Auth\PasswordResetController;
+use App\Http\Controllers\MapController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -29,3 +30,5 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('password/request-reset', [PasswordResetController::class, 'requestPasswordReset']);
 Route::post('password/reset', [PasswordResetController::class, 'resetPassword']);
 Route::post('password/verify-code', [PasswordResetController::class, 'verifyCode']);
+
+Route::get('/map/buildings', [MapController::class, 'getBuildings']);

@@ -42,6 +42,7 @@
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav ms-auto">
+{{--                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a>--}}
                 <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">Главная страница</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a>
