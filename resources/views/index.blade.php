@@ -42,10 +42,23 @@
         <!-- Menu -->
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav ms-auto">
-{{--                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a>--}}
-                <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">Главная страница</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a>
+                <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">{{ __('messages.a') }}</a></li>
+                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a></li>
+                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a></li>
+                <li class="nav-item dropdown">
+                    @php ($languages = ['en' => 'English', 'ru' => 'Русский'])
+                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 16px;">
+                        {{ strtoupper(app()->getLocale()) }}
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                        @foreach ($languages as $langCode => $language)
+                            <li>
+                                <a class="dropdown-item" href="{{ route('lang.change', ['lang' => $langCode]) }}">
+                                    {{ $language }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -462,6 +475,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
+                        {{ __('messages.a') }}
                         <p style="color: #aa8353; font-weight: 600; font-size: 20px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6);">
                             Первая выставка элитной недвижимости Армении</p>
                         <p style="  color: #aa8353; font-weight: 600; font-size: 18px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6); margin-bottom: 0px; padding-bottom: 0;">

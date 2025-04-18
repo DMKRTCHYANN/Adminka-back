@@ -39,6 +39,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="/">Главная страница</a></li>
                 <li class="nav-item"><a class="nav-link active" href="{{ route('contact') }}">Обратная Связь</a></li>
+                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a>
                 </ul>
         </div>
     </div>
