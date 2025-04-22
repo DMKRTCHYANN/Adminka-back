@@ -27,43 +27,7 @@
     </svg>
 </div>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <!-- Logo -->
-        <div class="logo-wrapper">
-            <!--                <a class="logo" href="/"><h1 style="font-weight: 400; font-size: 20px; font-family: 'system-ui';margin-bottom: 0;">INVEST ARMENIA</h1></a>-->
-            <a class="logo" href="/"><img src="./img/logoo.svg?3" class="logo"
-                                          style="max-width: 235px; width: 100%"/></a>
-        </div>
-        <!-- Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">{{ __('messages.a') }}</a></li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a></li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a></li>
-                <li class="nav-item dropdown">
-                    @php ($languages = ['en' => 'English', 'ru' => 'Русский'])
-                    <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 16px;">
-                        {{ strtoupper(app()->getLocale()) }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                        @foreach ($languages as $langCode => $language)
-                            <li>
-                                <a class="dropdown-item" href="{{ route('lang.change', ['lang' => $langCode]) }}">
-                                    {{ $language }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+@include('components.navbar')
 <!--
     <section class="comming section-padding">
         <div class="">
@@ -152,7 +116,7 @@
                                 <h1>{{ strip_tags($building->title) }}</h1>
                                 <div class="butn-light mt-30 mb-30">
                                     <a href="/buildings/{{ $building->id }}">
-                                        <span>Узнать больше</span>
+                                        <span>{{__('messages.more')}}</span>
                                     </a>
                                 </div>
                             </div>
@@ -475,19 +439,16 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
-                        {{ __('messages.a') }}
                         <p style="color: #aa8353; font-weight: 600; font-size: 20px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6);">
-                            Первая выставка элитной недвижимости Армении</p>
+                            {{ __('messages.Первая_выставка элитной недвижимости Армении')  }}</p>
                         <p style="  color: #aa8353; font-weight: 600; font-size: 18px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6); margin-bottom: 0px; padding-bottom: 0;">
-                            12 апреля 12:00 - 21:00 </p>
+                                  {{ __('messages.date') }}  </p>
                         <p style="color: #aa8353; font-weight: 600; font-size: 18px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6);">
-                            13 апреля 11:00 - 20:00 </p>
+                            {{ __('messages.date_2') }} </p>
                         <p style="color: #bfbfbd; font-weight: 600; font-size: 16px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6);">
-                            Впервые в России состоится выставка-продажа элитной недвижимости Армении, которая пройдет
-                            12-13 апреля в гостинице “Ararat Park Hyatt Moscow”.</p>
+                            {{ __('messages.first') }}</p>
                         <p style="color: #bfbfbd; font-weight: 600; font-size: 16px; text-shadow: -2px 1px 2px rgba(0,0,0,0.6);">
-                            Это уникальная возможность для всех, кто интересуется покупкой недвижимости в Армении,
-                            получить эксклюзивные предложения от ведущих девелоперов страны.</p>
+                               {{__('messages.unique_opportunity')}} </p>
                         <!-- Rating -->
                         <!--                            <div class="ratting-point mt-30 mb-30">-->
                         <!--                                <div class="features-ratting">-->
@@ -544,10 +505,10 @@
                                      style="height: 400px;object-fit: cover" alt="" class="img-fluid"></figure>
                         <div class="caption padding-left">
                             <h4><a href="/buildings/{{ $building->id}}">{{ strip_tags($building->title) }}</a></h4>
-                            <p>{{ strip_tags($building->short_description) }}</p>
+                            <p>{{ strip_tags($building->short_description[app()->getLocale()]) }}</p>
                             <div class="info-wrapper mt-20">
                                 <div class="butn-dark"><a
-                                        href="/buildings/{{ $building->id }}"><span>Узнать больше</span></a></div>
+                                        href="/buildings/{{ $building->id }}"><span>{{__('messages.more')}}</span></a></div>
                             </div>
                         </div>
                     </div>
@@ -564,18 +525,15 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <h3 class="sub-title border-bot-dark">Наш Партнер</h3>
+                <h3 class="sub-title border-bot-dark">{{__('messages.partner')}}</h3>
             </div>
             <div class="col-md-9">
                 <a style="margin-bottom: 20px" href="https://meluvis.com/" target="_blank">
                     <img src="./img/partner/logo.svg" style="width: 100%;"/>
                 </a>
                 <!--                    <div class="section-title whte"><span style="color: white;font-family: 'system-ui'">MELUVIS</span></div>-->
-                <h6 style="font-family: 'Outfit', sans-serif;color:#adadad;margin-bottom: 3px;">Революция в маркетинге
-                    недвижимости</h6>
-                <h6 style="font-family: 'Outfit', sans-serif;color: #adadad;line-height: 30px" class="mb-30">Современная
-                    3D-платформа, предназначенная для демонстрации и продажи недвижимости, предлагающая потенциальным
-                    покупателям полную информацию о районах, зданиях и отдельных квартирах, доступных для продажи.</h6>
+                <h6 style="font-family: 'Outfit', sans-serif;color:#adadad;margin-bottom: 3px;">{{__('messages.revolution')}} </h6>
+                <h6 style="font-family: 'Outfit', sans-serif;color: #adadad;line-height: 30px" class="mb-30">{{__('messages.platform')}}</h6>
             </div>
         </div>
     </div>

@@ -2,55 +2,39 @@
 <html lang="zxx">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <title>Invest Armenia | Contact Us</title>
-    <link rel="shortcut icon" href="../img/favicon.png" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Outfit:wght@300;400&display=swap">
-    <link rel="stylesheet" href="../css/plugins.css" />
-    <link rel="stylesheet" href="../css/style.css?14" />
+    <link rel="shortcut icon" href="../img/favicon.png"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Outfit:wght@300;400&display=swap">
+    <link rel="stylesheet" href="../css/plugins.css"/>
+    <link rel="stylesheet" href="../css/style.css?14"/>
 </head>
 <body>
 <!-- Preloader -->
 <div class="preloader-bg"></div>
 <div id="preloader">
     <div id="preloader-status">
-        <div class="preloader-position loader"> <span></span> </div>
+        <div class="preloader-position loader"><span></span></div>
     </div>
 </div>
 <!-- Progress scroll totop -->
 <div class="progress-wrap cursor-pointer">
     <svg class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
+        <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
     </svg>
 </div>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <!-- Logo -->
-        <div class="logo-wrapper">
-            <!--                <a class="logo" href="/"><h1 style="font-weight: 400; font-size: 20px; font-family: 'system-ui';margin-bottom: 0;">INVEST ARMENIA</h1></a>-->
-            <a class="logo" href="/"><img src="../img/logoo.svg?3" class="logo" style="max-width: 170px; width: 100%" /></a>
-        </div>
-        <!-- Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"><i class="ti-menu"></i></span> </button>
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="/">Главная страница</a></li>
-                <li class="nav-item"><a class="nav-link active" href="{{ route('contact') }}">Обратная Связь</a></li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a>
-                </ul>
-        </div>
-    </div>
-</nav>
+@include('components.navbar')
 <!-- Header Banner -->
-<div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="5" data-background="/img/firdus/img1.jpg">
+<div class="banner-header section-padding valign bg-img bg-fixed bg-position-bottom" data-overlay-dark="5"
+     data-background="/img/firdus/img1.jpg">
     <div class="container">
         <div class="row">
             <div class="col-md-12 caption text-center">
                 <!--                    <h4>Get in touch</h4>-->
-                <h1>Обратная Связь</h1>
+                <h1>{{__('messages.Обратная_Связь')}}</h1>
             </div>
         </div>
     </div>
@@ -67,14 +51,14 @@
             <!--                    <div class="sub-title border-bot-light">Location</div>-->
             <!--                </div>-->
             <div class="col-md-12">
-                <div class="section-title">Обратная Связь</div>
+                <div class="section-title">{{__('messages.Обратная_Связь')}}</div>
                 <!--                    <p class="mb-30">Lorem ipsum viverra tristique justo duis vitae diaminte neque nivamus aestan ateuene artines ariianu the ateliten finibus viverra neclacus in the nedana mis erodino fermes dis parturient monte nascete ridiculus in the miss martin.</p>-->
                 <div class="row mb-30">
                     <div class="col-lg-4 col-md-12">
                         <div class="reservations mb-15">
                             <div class="icon"><span class="flaticon-call"></span></div>
                             <div class="text">
-                                <p>Номер телефона</p> <a href="tel:+37499553358">+374 99 55 33 58</a>
+                                <p>{{__('messages.phone')}}</p> <a href="tel:+37499553358">+374 99 55 33 58</a>
                             </div>
                         </div>
                     </div>
@@ -101,30 +85,35 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
-                                <h3>Свяжитесь с нами</h3>
+                                <h3>{{__('messages.Свяжитесь_с_нами')}}</h3>
                                 <form method="post" class="contact__form">
                                     <!-- form message -->
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="alert alert-success contact__msg" style="display: none" role="alert"> Your message was sent successfully. </div>
+                                            <div class="alert alert-success contact__msg" style="display: none"
+                                                 role="alert"> Your message was sent successfully.
+                                            </div>
                                         </div>
                                     </div>
                                     <!-- form elements -->
                                     <div class="row">
                                         <div class="col-md-6 form-group">
-                                            <input name="name" type="text" placeholder="Ваше имя *" required>
+                                            <input name="name" type="text" placeholder="{{ __('messages.name') }}" required>
                                         </div>
                                         <div class="col-md-6 form-group">
-                                            <input name="email" type="email" placeholder="Ваш адрес электронной почты *" required>
+                                            <input name="email" type="email" placeholder="{{ __('messages.email') }}"
+                                                   required>
                                         </div>
                                         <div class="col-md-12 form-group">
-                                            <input name="phone" type="text" placeholder="Ваш номер *" required>
+                                            <input name="phone" type="text" placeholder="{{ __('messages.number') }}" required>
                                         </div>
                                         <div class="col-md-12 form-group">
-                                            <textarea name="message" id="message" cols="30" rows="4" placeholder="Сообщение *" required></textarea>
+                                            <textarea name="message" id="message" cols="30" rows="4"
+                                                      placeholder="{{ __('messages._message') }}" required></textarea>
                                         </div>
                                         <div class="col-md-12 mt-10">
-                                            <button type="submit" class="butn-dark2"><span>Отправить сообщение</span></button>
+                                            <button type="submit" class="butn-dark2"><span>{{__('messages.send')}}</span>
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
@@ -137,9 +126,11 @@
     </div>
 </section>
 <!-- Map -->
-<section class="map" >
+<section class="map">
     <div class="full-width">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.9197026431902!2d37.61907557733507!3d55.759897073086876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5b60171e59%3A0x917c9835c8056849!2sArarat%20Park%20Hyatt%20Moscow!5e0!3m2!1sen!2sam!4v1741160330748!5m2!1sen!2sam" width="100%" height="300" frameborder="0" allowfullscreen></iframe>
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2244.9197026431902!2d37.61907557733507!3d55.759897073086876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54a5b60171e59%3A0x917c9835c8056849!2sArarat%20Park%20Hyatt%20Moscow!5e0!3m2!1sen!2sam!4v1741160330748!5m2!1sen!2sam"
+            width="100%" height="300" frameborder="0" allowfullscreen></iframe>
     </div>
 </section>
 <!-- Footer -->

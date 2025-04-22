@@ -11,13 +11,6 @@
     <link rel="stylesheet" href="css/plugins.css"/>
     <link rel="stylesheet" href="css/style.css?24"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        #map {
-            width: 100%;
-            height: 860px;
-            margin-top: 100px;
-        }
-    </style>
 </head>
 <body>
 <!-- Preloader -->
@@ -34,41 +27,50 @@
     </svg>
 </div>
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <!-- Logo -->
-        <div class="logo-wrapper">
-            <a class="logo" href="/"><img src="./img/logoo.svg?3" class="logo"
-                                          style="max-width: 235px; width: 100%"/></a>
-        </div>
-        <!-- Button -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar"
-                aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation"><span
-                class="navbar-toggler-icon"><i class="ti-menu"></i></span></button>
-        <!-- Menu -->
-        <div class="collapse navbar-collapse" id="navbar">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" style="font-size: 16px" href="/">Главная страница</a></li>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('contact') }}">Обратная Связь</a>
-                <li class="nav-item"><a class="nav-link" style="font-size: 16px" href="{{ route('map') }}">Карта</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+@include('components.navbar')
+
+<!-- Search Box -->
+<input id="pac-input" class="controls" type="text" placeholder="Search Location">
+
 <div id="map"></div>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZrlzgVNXCPNCv-pGTjYN-Ic_DofQk8gE&callback=initMap" async
-        defer></script>
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZrlzgVNXCPNCv-pGTjYN-Ic_DofQk8gE&libraries=places&callback=initMap"
+    async defer></script>
+
 <script>
     let map;
-
     const buildings = @json($buildings);
 
     function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
             center: {lat: 40.1792, lng: 44.5060},
             zoom: 14
+        });
+
+        const input = document.getElementById('pac-input');
+        const searchBox = new google.maps.places.SearchBox(input);
+
+        map.controls[google.maps.ControlPosition.TOP_RIGHT].push(input);
+
+        map.addListener('bounds_changed', () => {
+            searchBox.setBounds(map.getBounds());
+        });
+
+        searchBox.addListener('places_changed', () => {
+            const places = searchBox.getPlaces();
+            if (places.length === 0) return;
+
+            const bounds = new google.maps.LatLngBounds();
+            places.forEach(place => {
+                if (!place.geometry) return;
+                if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            map.fitBounds(bounds);
         });
 
         buildings.forEach(building => {
@@ -92,9 +94,9 @@
                     content: `
                         <div style="text-align: center;">
                             <img src="${building.bg_image ? '/storage/' + building.bg_image : '/img/default.png'}" alt="${building.title}" style="width: 500px; height: auto; margin-bottom: 8px;">
-                            <h4 style="margin: 8px 0;">${building.title}</h4>
-                            <p style="margin: 4px 0;">${building.short_description}</p>
-                            <a href="/buildings/${building.id}" target="_blank" style="color: blue; text-decoration: underline;">Подробнее</a>
+                            <h4 style="margin: 8px 0;  color: black">${building.title}</h4>
+                    <p>${building.short_description[locale]}</p>
+                            <a href="/buildings/${building.id}" target="_blank" style="color: blue; text-decoration: underline;">{{__('messages.more')}}</a>
                         </div>
                     `
                 });
@@ -105,10 +107,47 @@
         });
     }
 
+    const locale = "{{ app()->getLocale() }}";
+
     window.addEventListener('load', () => {
         document.getElementById('preloader').style.display = 'none';
         document.querySelector('.preloader-bg').style.display = 'none';
     });
 </script>
+<style>
+#map {
+    width: 100%;
+    height: 860px;
+    margin-top: 100px;
+}
+#pac-input {
+    margin-top: 90px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    z-index: 1;
+    left: 150px;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 40px;
+    padding: 10px 15px 10px 40px;
+    font-size: 16px;
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 40px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    outline: none;
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+#pac-input:focus {
+    border-color: #4285f4;
+    box-shadow: 0px 4px 8px rgba(66, 133, 244, 0.3);
+}
+
+</style>
 </body>
 </html>
+
+

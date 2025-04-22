@@ -20,7 +20,6 @@ class HomeController extends Controller
     public function show($id)
     {
         $building = Building::query()->findOrFail($id);
-
         $images = Image::query()->where('building_id', $building->id)->get();
 
         return view('show', [
