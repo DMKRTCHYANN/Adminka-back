@@ -28,7 +28,6 @@
 </div>
 <!-- Navbar -->
 @include('components.navbar')
-
 <!-- Search Box -->
 <input id="pac-input" class="controls" type="text" placeholder="Search Location">
 
@@ -41,7 +40,6 @@
 <script>
     let map;
     const buildings = @json($buildings);
-
     function initMap() {
         const map = new google.maps.Map(document.getElementById("map"), {
             center: {lat: 40.1792, lng: 44.5060},
@@ -140,12 +138,10 @@
     outline: none;
     transition: box-shadow 0.2s ease-in-out;
 }
-
 #pac-input:focus {
     border-color: #4285f4;
     box-shadow: 0px 4px 8px rgba(66, 133, 244, 0.3);
 }
-
 </style>
 </body>
 </html>

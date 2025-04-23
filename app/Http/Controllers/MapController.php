@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Building;
+use Illuminate\Support\Facades\Http;
 
 class MapController extends Controller
 {
@@ -27,5 +28,26 @@ class MapController extends Controller
         });
 
         return view('map', ['buildings' => $data]);
+    }
+
+    public function getAddress(Request $request)
+    {
+        $latitude = $request->query('latitude');
+        $longitude = $request->query('longitude');
+
+        if (!$latitude || !$longitude) {
+            return response()->json(['error' => 'Coordinates are required'], 400);
+        }
+
+        $response = Http::get('https://maps.googleapis.com/maps/api/geocode/json', [
+            'latlng' => "$latitude,$longitude",
+            'key' => 'AIzaSyDZrlzgVNXCPNCv-pGTjYN-Ic_DofQk8gE',
+        ]);
+
+        if ($response->successful()) {
+            return response()->json($response->json());
+        }
+
+        return response()->json(['error' => 'Failed to fetch address'], 500);
     }
 }
